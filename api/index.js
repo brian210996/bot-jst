@@ -55,19 +55,7 @@ bot.on('message', (msg) => {
     })
     }else{
         state = 0
-})
-
-
-// routers
-r.get('/prediction/:i/:r', function(req, res, next) {    
-    model.predict(
-        [
-            parseFloat(req.params.i), // string to float
-            parseFloat(req.params.r)
-        ]
-    ).then((jres)=>{
-        res.json(jres);
-    })
 });
+
 
 module.exports = r;

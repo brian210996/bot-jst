@@ -63,3 +63,4 @@ bot.on('message', (msg) => {
     }else{
         state = 0
 });
+    module.exports = r;

@@ -27,39 +27,17 @@ bot.onText(/\/menu/, (msg) => {
         `this is your main menu`
     );   
 });
-state = 0
-bot.onText(/\/predict/, (msg) => { 
-    console.log(msg)
-    bot.sendMessage(
-        msg.chat.id,
-        `masukan nilai i|v contohnya 9|9`
-    );
-    state = 1
-});
 
-bot.on('message', (msg) => {
-    if(state == 1){
-        console.log(msg.text);
-        s = msg.text.split("|");
-        i = s[0]
-        v = s[1]
-        model.predict(
+// routers
+r.get('/prediction/:i/:r', function(req, res, next) {    
+    model.predict(
         [
-            parseFloat(s[0]), // string to float
-            parseFloat(s[1])
+            parseFloat(req.params.i), // string to float
+            parseFloat(req.params.r)
         ]
     ).then((jres)=>{
-        console.log(jres);
-        bot.sendMessage(
-           msg.chat.id,
-           `nilai v yang diprediksi adalah ${jres[0]} volt`
-    ); 
-        bot.sendMessage(
-           msg.chat.id,
-           `nilai p yang diprediksi adalah ${jres[1]} watt`
-    );
+        res.json(jres);
     })
-    }else{
-        state = 0
-})
+});
+
 module.exports = r;
